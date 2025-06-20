@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "AutenticacionApplication",
+            "request": "launch",
+            "mainClass": "com.login.autenticacion.AutenticacionApplication",
+            "projectName": "autenticacion"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-AutenticacionApplication<autenticacion>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.mediexpress.autenticacion.AutenticacionApplication",
+            "projectName": "autenticacion",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=56319 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=autenticacion"
+        }
+    ]
+}
