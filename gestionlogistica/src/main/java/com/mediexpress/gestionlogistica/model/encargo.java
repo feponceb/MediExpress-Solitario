@@ -1,4 +1,5 @@
-package com.mediexpress.gestionprods.model;
+package com.mediexpress.gestionlogistica.model;
+
 
 import java.util.Date;
 
@@ -15,35 +16,36 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "producto")
+@Table(name = "encargo")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class producto {
+public class encargo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idProd;
-
-    @Column(nullable = false, length = 50)
-    private String nombre;
-   
-    @Column(nullable = true, length = 50)
-    private String descripcion;
-   
-    @Column(nullable = false)
-    private int stock;
+    private Long idEncargo;
 
     @Column(nullable = false)
-    private int precio;
+    private Long idOrden;  // referencia a la orden en microservicio ventas
 
     @Column(nullable = false)
-    private int unidad;
+    private String estado;  
+
+    @Column(nullable = false)
+    private Date fechaSalida;
 
     @Column(nullable = true)
-    private Date fecha_exp;
+    private Date fechaEntregaEstimada;
+
+    @Column(nullable = true)
+    private Date fechaFinalizada;
+
+    @Column(nullable = true)
+    private String tracking;  // Código de seguimiento
 
     @ManyToOne
-    @JoinColumn(name = "idCategoria", nullable = true)
-    private categoria Categoria;  
+    @JoinColumn(name = "idEstado", nullable = false)
+    private estado estadoR;
+
 }

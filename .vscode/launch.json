@@ -2,6 +2,14 @@
     "configurations": [
         {
             "type": "java",
+            "name": "GestionprodsApplication",
+            "request": "launch",
+            "mainClass": "com.mediexpress.gestionprods.GestionprodsApplication",
+            "projectName": "gestionprods",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=64443 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=gestionprods"
+        },
+        {
+            "type": "java",
             "name": "AutenticacionApplication",
             "request": "launch",
             "mainClass": "com.login.autenticacion.AutenticacionApplication",
@@ -17,6 +25,26 @@
             "args": "",
             "envFile": "${workspaceFolder}/.env",
             "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=56319 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=autenticacion"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-GestioninventarioApplication<gestioninventario>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.mediexpress.gestioninventario.GestioninventarioApplication",
+            "projectName": "gestioninventario",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-GestionlogisticaApplication<gestionlogistica>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.mediexpress.gestionlogistica.GestionlogisticaApplication",
+            "projectName": "gestionlogistica",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }
