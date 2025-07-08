@@ -29,6 +29,7 @@ public class venta {
     @Column(nullable = false)
     private int total;
 
+    @Column(nullable = false)
     private Long idUsuario; 
 
 }

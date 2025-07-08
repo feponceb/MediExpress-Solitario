@@ -30,10 +30,10 @@ public class incidencia {
     @JoinColumn(name = "idMotivo", nullable = false)
     private motivo Motivo;
 
-    @ManyToOne
-    @JoinColumn(name = "idTicket", nullable = false)
-    private ticket Ticket;
-
+    @Column( nullable = false)
     private Long idVenta; 
+
+    @Column(nullable = false)
+    private Long idCliente;
 
 }

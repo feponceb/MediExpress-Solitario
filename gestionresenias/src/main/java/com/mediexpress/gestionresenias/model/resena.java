@@ -29,8 +29,10 @@ public class resena {
     @Column(nullable = false)
     private int calificacion; 
 
+    @Column(nullable = false)
     private Long idUsuario; 
 
+    @Column(nullable = false)
     private Long idProducto; 
 
     @Column(nullable = false)

@@ -2,6 +2,14 @@
     "configurations": [
         {
             "type": "java",
+            "name": "GestionventasApplication",
+            "request": "launch",
+            "mainClass": "com.mediexpress.gestionventas.GestionventasApplication",
+            "projectName": "gestionventas",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=50588 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=gestionventas"
+        },
+        {
+            "type": "java",
             "name": "GestionprodsApplication",
             "request": "launch",
             "mainClass": "com.mediexpress.gestionprods.GestionprodsApplication",
@@ -43,6 +51,36 @@
             "cwd": "${workspaceFolder}",
             "mainClass": "com.mediexpress.gestionlogistica.GestionlogisticaApplication",
             "projectName": "gestionlogistica",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-UsuariosApplication<usuarios>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.mediexpress.usuarios.UsuariosApplication",
+            "projectName": "usuarios",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-GestionreseniasApplication<gestionresenias>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.mediexpress.gestionresenias.GestionreseniasApplication",
+            "projectName": "gestionresenias",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-GestionreclamosApplication<gestionreclamos>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.mediexpress.gestionreclamos.GestionreclamosApplication",
+            "projectName": "gestionreclamos",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
         }

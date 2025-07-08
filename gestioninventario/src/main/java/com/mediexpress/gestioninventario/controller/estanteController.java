@@ -49,4 +49,13 @@ public class estanteController {
         return ResponseEntity.ok("Estante eliminado");
     }
 
+    @GetMapping("/{id}/producto-info")
+    public ResponseEntity<?> getNombreYUnidadProducto(@PathVariable Long id) {
+        estante e = estanteService.getEstante(id);
+        if (e.getProdId() == null) {
+            return ResponseEntity.badRequest().body("El estante no tiene producto asignado");
+        }
+        return ResponseEntity.ok(estanteService.getNombreYUnidadDeProducto(e.getProdId()));
+    }
+
 }

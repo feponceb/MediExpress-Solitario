@@ -1,13 +1,14 @@
 package com.mediexpress.gestionlogistica.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mediexpress.gestionlogistica.model.encargo;
 import com.mediexpress.gestionlogistica.repository.encargoRepository;
-import com.mediexpress.gestionlogistica.repository.estadoRepository;
+import com.mediexpress.gestionlogistica.webclient.VentaClient;
 
 import jakarta.transaction.Transactional;
 
@@ -16,10 +17,10 @@ import jakarta.transaction.Transactional;
 public class encargoService {
 
     @Autowired
-    private encargoRepository EncargoRepository;
+    private encargoRepository EncargoRepository;  
 
     @Autowired
-    private estadoRepository EstadoRepository;
+    private VentaClient ventaClient;
 
     public List<encargo> getAllEncargos() {
         return EncargoRepository.findAll();
@@ -31,14 +32,23 @@ public class encargoService {
     }
 
     public encargo saveEncargo(encargo e) {
-        // Validar existencia del estado
-        EstadoRepository.findById(e.getEstadoR().getIdEstado())
-                .orElseThrow(() -> new RuntimeException("Estado no encontrado"));
+    // Validar existencia de la venta
+    Map<String, Object> venta = ventaClient.obtenerVentaPorId(e.getIdOrden());
+    if (venta == null || venta.isEmpty()) {
+            throw new RuntimeException("Venta no encontrada, no se puede crear encargo");
+        }
+
         return EncargoRepository.save(e);
     }
 
     public encargo updateEncargo(Long id, encargo nuevo) {
-        encargo existente = getEncargo(id);
+    encargo existente = getEncargo(id);
+
+    // Validar existencia de la venta referenciada en la actualización
+    Map<String, Object> venta = ventaClient.obtenerVentaPorId(nuevo.getIdOrden());
+    if (venta == null || venta.isEmpty()) {
+        throw new RuntimeException("Venta no encontrada, no se puede actualizar encargo");
+    }
 
         existente.setIdOrden(nuevo.getIdOrden());
         existente.setEstado(nuevo.getEstado());

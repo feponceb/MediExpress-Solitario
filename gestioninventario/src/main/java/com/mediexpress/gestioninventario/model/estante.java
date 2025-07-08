@@ -24,4 +24,7 @@ public class estante {
     @Column(nullable = false)
     private String nombreEstante;
 
+    @Column(nullable = true)
+    private Long prodId;
+
 }

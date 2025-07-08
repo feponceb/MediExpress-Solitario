@@ -34,7 +34,7 @@ public class detalle {
 
     @ManyToOne
     @JoinColumn(name = "idVenta", nullable = false)
-    private venta Venta;
+    private venta venta;
 
     private Long idProducto; 
 
