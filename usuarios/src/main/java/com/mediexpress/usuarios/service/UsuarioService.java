@@ -3,9 +3,12 @@ package com.mediexpress.usuarios.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.mediexpress.usuarios.model.Rol;
 import com.mediexpress.usuarios.model.Usuario;
+import com.mediexpress.usuarios.repository.RolRepository;
 import com.mediexpress.usuarios.repository.UsuarioRepository;
 
 import jakarta.transaction.Transactional;
@@ -17,6 +20,9 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository UserRepository;
     @Autowired
+    private RolRepository RolRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     //traer todos los users
     public List<Usuario> getUsers(){
@@ -31,6 +37,17 @@ public class UsuarioService {
 
     //crear usuarios
     public Usuario saveUser(Usuario User){
+        if (User.getRol() != null && User.getRol().getIdRol() != null) {
+            Rol rol = RolRepository.findById(User.getRol().getIdRol())
+                .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
+            User.setRol(rol);
+        } else{
+            User.setRol(null);
+        }
+        if (User.getPassword() != null) {
+            User.setPassword(passwordEncoder.encode(User.getPassword()));
+        }
+
         return UserRepository.save(User);
     }
 
@@ -45,7 +62,7 @@ public class UsuarioService {
     public Usuario findByRut(String rut) {
         Usuario usuario = UserRepository.findByRut(rut);
     if (usuario == null) {
-        throw new RuntimeException("Usuario no encontrado con RUT: " + rut);
+        return null; 
     }
     return usuario;
     }
@@ -66,11 +83,26 @@ public class UsuarioService {
     existente.setNombre(nuevoUsuario.getNombre());
     existente.setCorreo(nuevoUsuario.getCorreo());
     existente.setPassword(nuevoUsuario.getPassword());
-    existente.setEstado(nuevoUsuario.getEstado());
+    
     existente.setRol(nuevoUsuario.getRol());
     
     // Guardar cambios
     return UserRepository.save(existente);
+    }
+
+    //buscar por correo
+    public Usuario findByCorreo(String correo) {
+        return UserRepository.findByCorreo(correo)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado con el correo: " + correo));
+    }
+
+    //buscar password de usuario
+    public Usuario findByPassword(String password) {
+        Usuario usuario = UserRepository.findByPassword(password);
+        if (usuario == null) {
+            throw new RuntimeException("Usuario no encontrado con la contraseña proporcionada");
+        }
+        return usuario;
     }
 
 }

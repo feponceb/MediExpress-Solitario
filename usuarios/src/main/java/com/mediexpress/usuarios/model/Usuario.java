@@ -34,9 +34,6 @@ public class Usuario {
     @Column(nullable = false)
     private String password;
 
-    @ManyToOne
-    @JoinColumn(name = "idEstado", nullable = true)
-    private Estado estado;
 
     @ManyToOne
     @JoinColumn(name = "idRol", nullable = true)

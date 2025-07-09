@@ -24,4 +24,14 @@ public class ClienteClient {
             .bodyToMono(Map.class).block();
     }
 
+    public UsuarioDTO obtenerPorCorreo(String correo) {
+        return this.webClient.get()
+            .uri("/correo/{correo}", correo)
+            .retrieve()
+            .onStatus(status -> status.is4xxClientError(),
+                response -> response.bodyToMono(String.class)
+                .map(body -> new RuntimeException("Cliente no encontrado")))
+            .bodyToMono(UsuarioDTO.class).block();
+    }
+
 }

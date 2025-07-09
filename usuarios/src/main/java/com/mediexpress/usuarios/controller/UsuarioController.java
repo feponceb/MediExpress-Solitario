@@ -47,21 +47,25 @@ public class UsuarioController {
     //crear usuarios
     @PostMapping
     public ResponseEntity<Usuario> saveUser(@RequestBody Usuario user){
-        Usuario usuarioExistente = UserService.findByRut(user.getRut());
-    if (usuarioExistente != null) {
-        // Actualizar campos
-        usuarioExistente.setNombre(user.getNombre());
-        usuarioExistente.setCorreo(user.getCorreo());
-        usuarioExistente.setPassword(user.getPassword());
-        usuarioExistente.setEstado(user.getEstado());
-        usuarioExistente.setRol(user.getRol());
-        
-        Usuario actualizado = UserService.saveUser(usuarioExistente);
-        return ResponseEntity.ok(actualizado);
-    } else {
-        // Crear nuevo usuario
-        Usuario nuevoUsuario = UserService.saveUser(user);
-        return ResponseEntity.status(201).body(nuevoUsuario);
+        Usuario usuarioExistente;
+        try {
+            usuarioExistente = UserService.findByRut(user.getRut());
+        } catch (RuntimeException e) {
+            usuarioExistente = null;
+        }
+
+        if (usuarioExistente != null) {
+            // Actualiza usuario existente
+            usuarioExistente.setNombre(user.getNombre());
+            usuarioExistente.setCorreo(user.getCorreo());
+            usuarioExistente.setPassword(user.getPassword());
+            usuarioExistente.setRol(user.getRol());
+            Usuario actualizado = UserService.saveUser(usuarioExistente);
+            return ResponseEntity.ok(actualizado);
+        } else {
+            // Crea uno nuevo
+            Usuario nuevoUsuario = UserService.saveUser(user);
+            return ResponseEntity.status(201).body(nuevoUsuario);
         }
     }
     
@@ -83,6 +87,28 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
+
+    //buscar por correo
+    @GetMapping("/correo/{correo}")
+    public ResponseEntity<Usuario> obtenerUserPorCorreo(@PathVariable String correo) {
+        try {
+            Usuario user = UserService.findByCorreo(correo);
+            return ResponseEntity.ok(user);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    //buscar por password
+    @GetMapping("/password/{password}")
+    public ResponseEntity<Usuario> obtenerUserPorPassword(@PathVariable String password) {
+        try {
+            Usuario user = UserService.findByPassword(password);
+            return ResponseEntity.ok(user);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    } 
     
 
 }
